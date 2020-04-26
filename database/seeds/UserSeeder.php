@@ -5,8 +5,8 @@ use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
 {
-    private function insert($data) {
-        $user = new User();
+    private function insert($data, $roles) {
+        $user = User::where('email', 'like', $data['email'])->first() ?? new User();
         $user->first_name = $data['first_name'];
         $user->last_name = $data['last_name'];
         $user->pesel = $data['pesel'];
@@ -16,6 +16,8 @@ class UserSeeder extends Seeder
         $user->email = $data['email'];
         $user->password = bcrypt($data['password']);
         $user->save();
+        $user->syncRoles($roles);
+        return $user;
     }
     /**
      * Run the database seeds.
@@ -24,15 +26,18 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $this->insert([
-           'first_name' => 'Jacek',
-           'last_name' => 'Obst',
-           'pesel' => '12345678901',
-           'address' => 'ul. Kwietna 12',
-           'zip_code' => '61111',
-           'city' => 'Poznań',
-           'email' => 'jacekobst1@gmail.com',
-           'password' => 'zaq1@WSX'
-        ]);
+        $user = $this->insert(
+            [
+               'first_name' => 'Jacek',
+               'last_name' => 'Obst',
+               'pesel' => '12345678901',
+               'address' => 'ul. Kwietna 12',
+               'zip_code' => '61111',
+               'city' => 'Poznań',
+               'email' => 'jacekobst1@gmail.com',
+               'password' => 'zaq1@WSX'
+            ],
+            ['admin', 'user']
+        );
     }
 }
