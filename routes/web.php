@@ -13,10 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware('auth')->group(function() {
+
+    Route::get('/', 'HomeController@index')->name('home');
+
+    Route::prefix('settings')->group(function() {
+        Route::prefix('users')->namespace('Settings')->group(function() {
+            Route::get('/',             'SettingsController@users')->name('settings.users');
+            Route::get('/create',       'SettingsController@usersCreate')->name('settings.users.create');
+            Route::post('/store',       'SettingsController@usersStore')->name('settings.users.store');
+        });
+    });
+
+});

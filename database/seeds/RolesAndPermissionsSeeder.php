@@ -14,13 +14,13 @@ class RolesAndPermissionsSeeder extends Seeder
      */
     public function run()
     {
-        Permission::updateOrCreate(['name' => 'manage_settings']);
-        Permission::updateOrCreate(['name' => 'manage_bill']);
+        Permission::updateOrCreate(['name' => 'manage-settings']);
+        Permission::updateOrCreate(['name' => 'manage-bill']);
 
         $role = Role::updateOrCreate(['name' => 'admin']);
-        $role->syncPermissions(['manage_settings']);
+        $role->syncPermissions(['manage-settings']);
 
         $role = Role::updateOrCreate(['name' => 'user']);
-        $role->syncPermissions(['manage_bill']);
+        $role->syncPermissions(['manage-bill']);
     }
 }

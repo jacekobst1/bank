@@ -37328,6 +37328,8 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+__webpack_require__(/*! ./modal */ "./resources/js/modal.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -37359,6 +37361,7 @@ try {
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -37372,6 +37375,83 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/modal.js":
+/*!*******************************!*\
+  !*** ./resources/js/modal.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+/**
+ * Wypełnianie zawartości modalu
+ */
+$('#modal').on('show.bs.modal', function (event) {
+  var _this = this;
+
+  var button = $(event.relatedTarget);
+  var url = button.data('target-url');
+  $.get(url, function (response) {
+    $(_this).find('.modal-content').html(response);
+  });
+});
+/**
+ * Wysyłanie formularza z modalu
+ */
+
+$('body').on('click', '.modal-submit-btn', function () {
+  var form = $('.modal-form');
+  var url = form.attr('action');
+  var method = form.attr('method');
+  $.ajax({
+    url: url,
+    type: method,
+    data: form.serialize(),
+    success: function success() {
+      // Przeładowanie strony w przypadku powodzenia
+      location.reload();
+    },
+    error: function error(response) {
+      if (response.status === 422) {
+        // Wyświetlanie komunikatów błędów w przypadku statusu 422 (nieudanea walidacja)
+        var errors = JSON.parse(response.responseText).errors;
+        $('.error-text').remove();
+
+        for (var _i = 0, _Object$entries = Object.entries(errors); _i < _Object$entries.length; _i++) {
+          var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+              key = _Object$entries$_i[0],
+              value = _Object$entries$_i[1];
+
+          $("[name=".concat(key, "]")).after("<small class='error-text text-danger'>".concat(value, "</small>"));
+        }
+      } else if (response.status === 400) {
+        // Wyświetlanie alertu o błędzie w przypadku statusu 400
+        $('.alert-danger').text(response.error).slideDown().delay(5000).slideUp();
+      }
+    }
+  });
+});
+/**
+ * Ukrywanie alertu w przypadku zamknięcia modalu
+ */
+
+$('#modal').on('hide.bs.modal', function (event) {
+  $('.alert').hide();
+});
 
 /***/ }),
 
