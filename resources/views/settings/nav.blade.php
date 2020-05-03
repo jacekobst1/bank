@@ -8,7 +8,7 @@
 @endsection
 <div class="nav">
     <div class="nav-item">
-        <button class="btn btn-sm btn-outline-secondary" data-url="manage-users">
+        <button class="btn btn-sm btn-outline-secondary" data-url="users">
             {{ __('Users management') }}
         </button>
     </div>
