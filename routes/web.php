@@ -24,6 +24,7 @@ Route::middleware('auth')->group(function() {
             Route::get('/',             'SettingsController@users')->name('settings.users');
             Route::get('/create',       'SettingsController@usersCreate')->name('settings.users.create');
             Route::post('/store',       'SettingsController@usersStore')->name('settings.users.store');
+            Route::get('/download-file/{id}',       'SettingsController@usersDownloadFile')->name('settings.users.download-file');
         });
     });
 

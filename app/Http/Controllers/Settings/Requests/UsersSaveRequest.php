@@ -26,7 +26,7 @@ class UsersSaveRequest extends FormRequest
         return [
             'first_name'        => 'required|string',
             'last_name'         => 'required|string',
-            'pesel'             => 'required|string|size:11',
+            'pesel'             => 'required|digits:11',
             'email'             => 'required|email',
             'address'           => 'required|string',
             'city'              => 'required|string',

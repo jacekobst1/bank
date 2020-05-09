@@ -1,7 +1,7 @@
 /**
  * Wypełnianie zawartości modalu
  */
-$('#modal').on('show.bs.modal', function (event) {
+$('.modal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
     var url = button.data('target-url');
     $.get(url, response => {
@@ -20,9 +20,19 @@ $('body').on('click', '.modal-submit-btn', function() {
         url: url,
         type: method,
         data: form.serialize(),
-        success: () => {
-            // Przeładowanie strony w przypadku powodzenia
-            location.reload();
+        success: response => {
+            // Przeładowanie strony lub/i przekierowanie na inny adres w przypadku powodzenia
+            if (response.url) {
+                $('#modal').modal('hide');
+                if (response.download) {
+                    open(response.url,'_blank');
+                    location.reload();
+                } else {
+                    location.href = response.url;
+                }
+            } else {
+                location.reload();
+            }
         },
         error: response => {
             if (response.status === 422) {
@@ -34,7 +44,8 @@ $('body').on('click', '.modal-submit-btn', function() {
                 }
             } else if (response.status === 400) {
                 // Wyświetlanie alertu o błędzie w przypadku statusu 400
-                $('.alert-danger').text(response.error).slideDown().delay(5000).slideUp();
+                let error = JSON.parse(response.responseText).error;
+                $('.alert-danger').text(error).slideDown().delay(5000).slideUp();
             }
         }
     });

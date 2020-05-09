@@ -12,14 +12,6 @@
         <i class="fas fa-plus"></i>
         {{ __('Add new user') }}
     </button>
-{{--    <a--}}
-{{--        type="button"--}}
-{{--        class="btn btn-primary"--}}
-{{--        href="{{ route('settings.manage-users.create') }}"--}}
-{{--    >--}}
-{{--        <i class="fas fa-plus"></i>--}}
-{{--        {{ __('Add new user') }}--}}
-{{--    </a>--}}
     <table class="table table-responsive mt-5">
         <thead>
             <tr>
