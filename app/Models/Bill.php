@@ -9,5 +9,9 @@ class Bill extends Model
 {
     use SoftDeletes;
 
+    private $currency_types = [
+        1 => 'PLN'
+    ];
+
     public function users() { return $this->belongsToMany('App\Models\User', 'bill_user_pivot'); }
 }
