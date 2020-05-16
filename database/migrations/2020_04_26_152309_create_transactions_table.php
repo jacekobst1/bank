@@ -17,7 +17,6 @@ class CreateTransactionsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('source_bill_id');
             $table->unsignedBigInteger('target_bill_id')->nullable();
-            $table->char('target_bill_number', 26)->nullable();
             $table->decimal('amount');
             $table->timestamps();
 

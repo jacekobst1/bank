@@ -1,7 +1,7 @@
-{!! Form::open(['route' => 'settings.users.store', 'class' => 'modal-form']) !!}
+{!! Form::model($user, ['route' => ['settings.users.update', $user->id], 'class' => 'modal-form']) !!}
     <div class="modal-header">
         <h5 class="modal-title">
-            {{ __('Creating new user') }}
+            {{ __('Editing the user') }}
         </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -61,7 +61,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-primary modal-submit-btn">
-            {{ __('Create') }}
+            {{ __('Save') }}
         </button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
             {{ __('Close') }}
