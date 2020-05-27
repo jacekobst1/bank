@@ -10,7 +10,11 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-
+                @can('manage-bill')
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ route('transactions') }}">{{ __('Transactions') }} <span class="sr-only">(current)</span></a>
+                    </li>
+                @endcan
             </ul>
 
             <!-- Right Side Of Navbar -->

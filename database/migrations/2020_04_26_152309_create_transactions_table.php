@@ -15,8 +15,9 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('source_bill_id');
-            $table->unsignedBigInteger('target_bill_id')->nullable();
+            $table->unsignedTinyInteger('type_id');
+            $table->unsignedBigInteger('source_bill_id')->nullable();
+            $table->unsignedBigInteger('target_bill_id');
             $table->decimal('amount');
             $table->timestamps();
 

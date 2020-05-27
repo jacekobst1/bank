@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\Bill;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -17,6 +18,19 @@ class UserSeeder extends Seeder
         $user->password = bcrypt($data['password']);
         $user->save();
         $user->syncRoles($roles);
+
+        if ($user->first_name === 'user') {
+            $bill = new Bill();
+            $bill->number = randomNumber(26);
+            $bill->save();
+            $user->bills()->attach($bill);
+
+            $bill = new Bill();
+            $bill->number = randomNumber(26);
+            $bill->save();
+            $user->bills()->attach($bill);
+        }
+
         return $user;
     }
     /**

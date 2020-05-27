@@ -29,7 +29,12 @@ class User extends Authenticatable
 
     public function bills() { return $this->belongsToMany('App\Models\Bill', 'bill_user_pivot'); }
 
-    public function getZipCodeAttribute($value) {
+    public function getFullNameAttribute()
+    {
+        return "$this->first_name $this->last_name";
+    }
+    public function getZipCodeAttribute($value)
+    {
         return substr($value, 0, 2).'-'.substr($value, 2, 3);
     }
 }

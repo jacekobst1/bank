@@ -19,6 +19,7 @@ class CreateCardsTable extends Migration
             $table->unsignedBigInteger('bill_id');
             $table->char('number', 16);
             $table->date('expiration_date');
+            $table->boolean('active')->default(1);
             $table->timestamps();
 
             $table->foreign('bill_id')

@@ -26,6 +26,8 @@ class SettingsController extends Controller
 
     /**
      * Getting all users and paginate
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function users(Request $request)
     {
@@ -51,6 +53,8 @@ class SettingsController extends Controller
 
     /**
      * Creating new user
+     * @param UsersSaveRequest $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function usersStore(UsersSaveRequest $request)
     {
@@ -88,7 +92,7 @@ class SettingsController extends Controller
 
         while (true) {
             $card_number = randomNumber(16);
-            if (!Card::where('number', 'LIKe', $card_number)->exists()) {
+            if (!Card::where('number', 'LIKE', $card_number)->exists()) {
                 break;
             }
         }
@@ -117,6 +121,9 @@ class SettingsController extends Controller
 
     /**
      * Updating the user
+     * @param $id
+     * @param UsersSaveRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function usersUpdate($id, UsersSaveRequest $request)
     {
@@ -137,6 +144,8 @@ class SettingsController extends Controller
     /**
      * Downloading the user account initial document that should be later send by post
      * Every file download results in password change
+     * @param $id
+     * @return \Barryvdh\DomPDF\PDF
      */
     public function usersDownloadFile($id)
     {
@@ -150,6 +159,8 @@ class SettingsController extends Controller
 
     /**
      * Getting the user delete dialog
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function usersDeleteConfirm($id)
     {
@@ -159,6 +170,8 @@ class SettingsController extends Controller
 
     /**
      * Deleting the user
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function usersDelete($id)
     {
