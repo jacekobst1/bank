@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::middleware('auth')->group(function() {
 
@@ -32,9 +32,11 @@ Route::middleware('auth')->group(function() {
             Route::post('/store',                   'SettingsController@usersStore')->name('settings.users.store');
             Route::get('/edit/{id}',                'SettingsController@usersEdit')->name('settings.users.edit');
             Route::post('/update/{id}',             'SettingsController@usersUpdate')->name('settings.users.update');
-            Route::get('/delete/{id}',              'SettingsController@usersDeleteConfirm')->name('settings.users.delete-confirm');
+            Route::get('/delete/{id}',              'SettingsController@usersDeleteDialog')->name('settings.users.delete');
             Route::delete('/delete/{id}',           'SettingsController@usersDelete')->name('settings.users.delete');
             Route::get('/download-file/{id}',       'SettingsController@usersDownloadFile')->name('settings.users.download-file');
+            Route::get('/change-password/{id}',     'SettingsController@usersChangePasswordDialog')->name('settings.users.change-password');
+            Route::post('/change-password/{id}',    'SettingsController@usersChangePassword')->name('settings.users.change-password');
         });
     });
 

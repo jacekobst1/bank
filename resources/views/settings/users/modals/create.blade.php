@@ -1,3 +1,21 @@
+<script>
+    $(function() {
+       $('[name=role_id]').change(function() {
+           if ($(this).val() == 1 ) {
+                $('#password-div').removeClass('d-none').addClass('d-flex');
+                $('#password-verify-div').removeClass('d-none').addClass('d-flex');
+                $('#password-input').attr('disabled', false);
+                $('#password-verify-input').attr('disabled', false);
+           } else {
+               $('#password-div').addClass('d-none').removeClass('d-flex');
+               $('#password-verify-div').addClass('d-none').removeClass('d-flex');
+               $('#password-input').attr('disabled', true);
+               $('#password-verify-input').attr('disabled', true);
+           }
+       });
+    });
+</script>
+
 {!! Form::open(['route' => 'settings.users.store', 'class' => 'modal-form']) !!}
     <div class="modal-header">
         <h5 class="modal-title">
@@ -54,7 +72,33 @@
             <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-start">
                 <label>
                     {{ __('Role') }}
-                    {!! Form::select('role_id', $roles, null, ['class' => 'form-control']) !!}
+                    {!! Form::select('role_id', $roles, 2, ['class' => 'form-control']) !!}
+                </label>
+            </div>
+            <div
+                    id="password-div"
+                    class="col-12 col-md-6 justify-content-center justify-content-md-start d-none"
+            >
+                <label>
+                    {{ __('Password') }}
+                    {!! Form::password('password', [
+                        'id' => 'password-input',
+                        'class' => 'form-control',
+                        'disabled'
+                    ]) !!}
+                </label>
+            </div>
+            <div
+                id="password-verify-div"
+                class="col-12 col-md-6 justify-content-center justify-content-md-start d-none"
+            >
+                <label>
+                    {{ __('Password confirm') }}
+                    {!! Form::password('password_verify', [
+                        'id' => 'password-verify-input',
+                        'class' => 'form-control',
+                        'disabled'
+                    ]) !!}
                 </label>
             </div>
         </div>

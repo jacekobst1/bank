@@ -35,14 +35,17 @@ class UsersSaveRequest extends FormRequest
                                     'string',
                                     'regex:/\d{2}-\d{3}/',
                                 ],
-            'role_id'            => 'required|integer'
+            'role_id'            => 'required|integer',
+            'password'           => 'required_if:role_id,1',
+            'password_verify'    => 'required_if:role_id,1|same:password'
         ];
     }
 
     public function messages()
     {
         return [
-            'zip_code.regex' => __('The zip code format is invalid (xx-xxx).')
+            'zip_code.regex' => __('The zip code format is invalid (xx-xxx)'),
+            'password_verify.same' => __('The passwords are different')
         ];
     }
 }

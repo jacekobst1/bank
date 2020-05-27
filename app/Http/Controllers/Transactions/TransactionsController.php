@@ -81,6 +81,6 @@ class TransactionsController extends Controller
         $transaction->target_bill_id = $target_bill_id;
         $transaction->amount = $validated['amount'];
         $transaction->save();
-        return redirect()->back();
+        return response()->json([], 200);
     }
 }

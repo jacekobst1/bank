@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Settings;
 
 use App\Card\Card;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Settings\Requests\UsersChangePasswordRequest;
 use App\Http\Controllers\Settings\Requests\UsersSaveRequest;
 use App\Models\Bill;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use PDF;
 use Illuminate\Support\Str;
@@ -79,6 +81,12 @@ class SettingsController extends Controller
         $user->save();
         $user->assignRole($validated['role_id']);
 
+        // Redirect back if admin
+        if ($validated['role_id'] == 1) {
+            return response()->json([], 200);
+        }
+
+        // Create bill and card if user, and download init user file
         while (true) {
             $bill_number = randomNumber(26);
             if (!Bill::where('number', 'LIKe', $bill_number)->exists()) {
@@ -162,7 +170,7 @@ class SettingsController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function usersDeleteConfirm($id)
+    public function usersDeleteDialog($id)
     {
         $user = User::findOrFail($id);
         return view('settings.users.modals.delete', compact('user'));
@@ -177,5 +185,31 @@ class SettingsController extends Controller
     {
         User::findOrFail($id)->delete();
         return redirect()->back();
+    }
+
+    /**
+     * Getting the user change password dialog
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function usersChangePasswordDialog($id)
+    {
+        $user = User::findOrFail($id);
+        return view('settings.users.modals.change-password', compact('user'));
+    }
+
+    /**
+     * Changing password of the user
+     * @param $id
+     * @param UsersChangePasswordRequest $request
+     * @return JsonResponse
+     */
+    public function usersChangePassword($id, UsersChangePasswordRequest $request)
+    {
+        $validated = $request->validated();
+        $user = User::findOrFail($id);
+        $user->password = bcrypt($validated['password']);
+        $user->save();
+        return response()->json([], 200);
     }
 }

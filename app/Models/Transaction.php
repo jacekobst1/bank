@@ -8,7 +8,9 @@ class Transaction extends Model
 {
     private static $types = [
         1 => 'Bank transfer',
-        2 => 'ATM'
+        2 => 'ATM',
+        3 => 'Payment by card',
+        4 => 'BLIK'
     ];
 
     public function sourceBill() { return $this->belongsTo('App\Models\Bill', 'source_bill_id'); }

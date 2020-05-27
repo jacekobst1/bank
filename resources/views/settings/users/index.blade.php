@@ -76,6 +76,16 @@
                         </a>
                         <button
                             type="button"
+                            class="btn btn-sm btn-secondary modal-open-btn"
+                            data-toggle="modal"
+                            data-target="#modal"
+                            data-target-url="{{ route('settings.users.change-password', $user->id) }}"
+                            title="{{ __('Change password') }}"
+                        >
+                            <i class="fa fa-key"></i>
+                        </button>
+                        <button
+                            type="button"
                             class="btn btn-sm btn-danger modal-open-btn"
                             data-toggle="modal"
                             data-target="#modal"
