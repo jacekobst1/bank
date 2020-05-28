@@ -10,7 +10,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-                @can('manage-bill')
+                @can('manage-bills')
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ route('transactions') }}">{{ __('Transactions') }} <span class="sr-only">(current)</span></a>
                     </li>
@@ -41,8 +41,21 @@
                                     {{ __('Settings') }}
                                 </a>
                             @endcan
+                            @can('manage-bills')
+                                <a
+                                    href="#"
+                                    class="dropdown-item modal-open-btn"
+                                    data-toggle="modal"
+                                    data-target="#modal"
+                                    data-target-url="{{ route('settings.users.change-password', auth()->id()) }}"
+                                    title="{{ __('Change password') }}"
+                                >
+                                    {{ __('Change password') }}
+                                </a>
+                            @endcan
 
-                            <a class="dropdown-item" href="{{ route('logout') }}"
+
+                                <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}

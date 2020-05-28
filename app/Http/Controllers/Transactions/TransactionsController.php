@@ -19,7 +19,7 @@ class TransactionsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('permission:manage-bill');
+        $this->middleware('permission:manage-bills');
     }
 
     /**

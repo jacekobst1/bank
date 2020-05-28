@@ -13,7 +13,7 @@ class TransactionsCreateRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->can('manage-bill');
+        return auth()->user()->can('manage-bills');
     }
 
     /**

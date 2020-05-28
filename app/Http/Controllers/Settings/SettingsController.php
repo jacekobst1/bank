@@ -23,7 +23,10 @@ class SettingsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('permission:manage-settings');
+        $this->middleware('permission:manage-settings', ['except' => [
+            'usersChangePasswordDialog',
+            'usersChangePassword'
+        ]]);
     }
 
     /**
