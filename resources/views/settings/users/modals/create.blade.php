@@ -1,4 +1,4 @@
-<script>
+<script type="text/javascript">
     $(function() {
        $('[name=role_id]').change(function() {
            if ($(this).val() == 1 ) {
