@@ -18,6 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->unsignedTinyInteger('type_id');
             $table->unsignedBigInteger('source_bill_id')->nullable();
             $table->unsignedBigInteger('target_bill_id');
+            $table->unsignedBigInteger('card_id')->nullable();
             $table->decimal('amount');
             $table->timestamps();
 
@@ -29,6 +30,11 @@ class CreateTransactionsTable extends Migration
             $table->foreign('target_bill_id')
                 ->references('id')
                 ->on('bills')
+                ->onDelete('cascade');
+
+            $table->foreign('card_id')
+                ->references('id')
+                ->on('cards')
                 ->onDelete('cascade');
 
         });
