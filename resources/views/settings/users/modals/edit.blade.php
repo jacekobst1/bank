@@ -1,4 +1,8 @@
-{!! Form::model($user, ['route' => ['settings.users.update', $user->id], 'class' => 'modal-form']) !!}
+{!! Form::model($user, [
+        'route' => ['settings.users.update', $user->id],
+        'method' => 'PUT',
+        'class' => 'modal-form'
+]) !!}
     <div class="modal-header">
         <h5 class="modal-title">
             {{ __('Editing the user') }}

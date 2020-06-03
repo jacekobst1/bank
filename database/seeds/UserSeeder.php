@@ -46,7 +46,7 @@ class UserSeeder extends Seeder
                'last_name' => 'Obst',
                'pesel' => '98010198765',
                'address' => 'ul. Powstańców Wielkopolskich 1',
-               'zip_code' => '61895',
+               'zip_code' => '61-895',
                'city' => 'Poznań',
                'email' => 'jacekobst1@gmail.com',
                'password' => 'zaq1@WSX'
@@ -59,7 +59,7 @@ class UserSeeder extends Seeder
                 'last_name' => 'Ponicki',
                 'pesel' => '97010198765',
                 'address' => 'ul. Powstańców Wielkopolskich 1',
-                'zip_code' => '61895',
+                'zip_code' => '61-895',
                 'city' => 'Poznań',
                 'email' => 'matisfable@gmail.com',
                 'password' => 'zaq1@WSX'
@@ -72,7 +72,7 @@ class UserSeeder extends Seeder
                 'last_name' => 'Sołtysiak',
                 'pesel' => '97010198765',
                 'address' => 'ul. Powstańców Wielkopolskich 1',
-                'zip_code' => '61895',
+                'zip_code' => '61-895',
                 'city' => 'Poznań',
                 'email' => 'woj.soltysiak@gmail.com',
                 'password' => 'zaq1@WSX'
@@ -85,7 +85,7 @@ class UserSeeder extends Seeder
                 'last_name' => 'user',
                 'pesel' => '97010198765',
                 'address' => 'ul. Powstańców Wielkopolskich 1',
-                'zip_code' => '61895',
+                'zip_code' => '61-895',
                 'city' => 'Poznań',
                 'email' => 'user@gmail.com',
                 'password' => 'zaq1@WSX'

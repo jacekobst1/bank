@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Settings\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UsersSaveRequest extends FormRequest
+class UsersUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -35,17 +35,14 @@ class UsersSaveRequest extends FormRequest
                                     'string',
                                     'regex:/\d{2}-\d{3}/',
                                 ],
-            'role_id'            => 'required|integer',
-            'password'           => 'required_if:role_id,1',
-            'password_verify'    => 'required_if:role_id,1|same:password'
+            'role_id'            => 'required|integer'
         ];
     }
 
     public function messages()
     {
         return [
-            'zip_code.regex' => __('The zip code format is invalid (xx-xxx)'),
-            'password_verify.same' => __('The passwords are different')
+            'zip_code.regex' => __('The zip code format is invalid (xx-xxx)')
         ];
     }
 }

@@ -17,8 +17,8 @@ class CreateBillsTable extends Migration
             $table->id();
             $table->char('number', 26);
             $table->unsignedTinyInteger('currency_type_id')->default(1);
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

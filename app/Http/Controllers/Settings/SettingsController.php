@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Settings;
 use App\Card\Card;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Settings\Requests\UsersChangePasswordRequest;
-use App\Http\Controllers\Settings\Requests\UsersSaveRequest;
+use App\Http\Controllers\Settings\Requests\UsersStoreRequest;
+use App\Http\Controllers\Settings\Requests\UsersUpdateRequest;
 use App\Models\Bill;
 use App\Models\User;
 use Carbon\Carbon;
@@ -58,10 +59,10 @@ class SettingsController extends Controller
 
     /**
      * Creating new user
-     * @param UsersSaveRequest $request
+     * @param UsersStoreRequest $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
-    public function usersStore(UsersSaveRequest $request)
+    public function usersStore(UsersStoreRequest $request)
     {
         $validated = $request->validated();
 
@@ -69,7 +70,10 @@ class SettingsController extends Controller
             ->orWhere('pesel', 'LIKE', $validated['pesel'])
             ->exists();
         if ($user_duplicate) {
-            return response()->json(['error' => __('User with identical data already exists')], 400);
+            return response()->json([
+                'status' => 400,
+                'error' => __('User with identical data already exists')
+            ], 400);
         }
 
         $user = new User();
@@ -86,7 +90,7 @@ class SettingsController extends Controller
 
         // Redirect back if admin
         if ($validated['role_id'] == 1) {
-            return response()->json([], 200);
+            return response()->json(['status' => 200], 200);
         }
 
         // Create bill and card if user, and download init user file
@@ -122,8 +126,10 @@ class SettingsController extends Controller
 
     /**
      * Getting the user edit dialog
+     * @param int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function usersEdit($id)
+    public function usersEdit(int $id)
     {
         $user = User::findOrFail($id);
         $roles = Role::pluck('name', 'id');
@@ -132,11 +138,11 @@ class SettingsController extends Controller
 
     /**
      * Updating the user
-     * @param $id
-     * @param UsersSaveRequest $request
+     * @param int $id
+     * @param UsersUpdateRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function usersUpdate($id, UsersSaveRequest $request)
+    public function usersUpdate(int $id, UsersUpdateRequest $request)
     {
         $validated = $request->validated();
         $user = User::findOrFail($id);
@@ -153,12 +159,34 @@ class SettingsController extends Controller
     }
 
     /**
+     * Getting the user delete dialog
+     * @param int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function usersDeleteDialog(int $id)
+    {
+        $user = User::findOrFail($id);
+        return view('settings.users.modals.delete', compact('user'));
+    }
+
+    /**
+     * Deleting the user
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function usersDelete(int $id)
+    {
+        User::findOrFail($id)->delete();
+        return redirect()->back();
+    }
+
+    /**
      * Downloading the user account initial document that should be later send by post
      * Every file download results in password change
-     * @param $id
+     * @param int $id
      * @return \Barryvdh\DomPDF\PDF
      */
-    public function usersDownloadFile($id)
+    public function usersDownloadFile(int $id)
     {
         $user = User::findOrFail($id);
         $password = Str::random();
@@ -169,33 +197,11 @@ class SettingsController extends Controller
     }
 
     /**
-     * Getting the user delete dialog
-     * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function usersDeleteDialog($id)
-    {
-        $user = User::findOrFail($id);
-        return view('settings.users.modals.delete', compact('user'));
-    }
-
-    /**
-     * Deleting the user
-     * @param $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function usersDelete($id)
-    {
-        User::findOrFail($id)->delete();
-        return redirect()->back();
-    }
-
-    /**
      * Getting the user change password dialog
-     * @param $id
+     * @param int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function usersChangePasswordDialog($id)
+    public function usersChangePasswordDialog(int $id)
     {
         $user = User::findOrFail($id);
         return view('settings.users.modals.change-password', compact('user'));
@@ -203,16 +209,27 @@ class SettingsController extends Controller
 
     /**
      * Changing password of the user
-     * @param $id
+     * @param int $id
      * @param UsersChangePasswordRequest $request
      * @return JsonResponse
      */
-    public function usersChangePassword($id, UsersChangePasswordRequest $request)
+    public function usersChangePassword(int $id, UsersChangePasswordRequest $request)
     {
         $validated = $request->validated();
         $user = User::findOrFail($id);
         $user->password = bcrypt($validated['password']);
         $user->save();
-        return response()->json([], 200);
+        return response()->json(['status' => 200], 200);
+    }
+
+    /**
+     * Getting the user bills manage dialog
+     * @param int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function usersManageBillsDialog(int $id)
+    {
+        $user = User::findOrFail($id);
+        return view('settings.users.modals.manage-bills', compact('user'));
     }
 }

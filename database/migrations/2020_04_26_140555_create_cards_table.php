@@ -22,6 +22,11 @@ class CreateCardsTable extends Migration
             $table->boolean('active')->default(1);
             $table->timestamps();
 
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+
             $table->foreign('bill_id')
                 ->references('id')
                 ->on('bills')

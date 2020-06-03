@@ -68,6 +68,7 @@ class TransactionsController extends Controller
         $bill = Bill::findOrFail($validated['bill_id']);
         if ($validated['amount'] > $bill->balance) {
             return response()->json([
+                'status' => 400,
                 'error' =>
                     __('There is not enough money in this bill')
                     . " ($bill[balance] $bill[currency])"
@@ -81,6 +82,6 @@ class TransactionsController extends Controller
         $transaction->target_bill_id = $target_bill_id;
         $transaction->amount = $validated['amount'];
         $transaction->save();
-        return response()->json([], 200);
+        return response()->json(['status' => 200], 200);
     }
 }

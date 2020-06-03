@@ -29,21 +29,28 @@ Route::middleware('auth')->group(function() {
     });
 
     Route::prefix('settings')->group(function() {
-        Route::prefix('users')->namespace('Settings')->group(function() {
-            Route::get('/',                         'SettingsController@users')->name('settings.users');
-            Route::get('/create',                   'SettingsController@usersCreate')->name('settings.users.create');
-            Route::post('/store',                   'SettingsController@usersStore')->name('settings.users.store');
-            Route::get('/edit/{id}',                'SettingsController@usersEdit')->name('settings.users.edit');
-            Route::post('/update/{id}',             'SettingsController@usersUpdate')->name('settings.users.update');
-            Route::get('/delete/{id}',              'SettingsController@usersDeleteDialog')->name('settings.users.delete');
-            Route::delete('/delete/{id}',           'SettingsController@usersDelete')->name('settings.users.delete');
-            Route::get('/download-file/{id}',       'SettingsController@usersDownloadFile')->name('settings.users.download-file');
-            Route::get('/change-password/{id}',     'SettingsController@usersChangePasswordDialog')->name('settings.users.change-password');
-            Route::post('/change-password/{id}',    'SettingsController@usersChangePassword')->name('settings.users.change-password');
+        Route::prefix('users')->namespace('Settings')->group(function () {
+            Route::get('/',                             'SettingsController@users')->name('settings.users');
+            Route::get('/create',                       'SettingsController@usersCreate')->name('settings.users.create');
+            Route::post('/store',                       'SettingsController@usersStore')->name('settings.users.store');
+            Route::get('/edit/{id}',                    'SettingsController@usersEdit')->name('settings.users.edit');
+            Route::put('/update/{id}',                  'SettingsController@usersUpdate')->name('settings.users.update');
+            Route::get('/delete/{id}',                  'SettingsController@usersDeleteDialog')->name('settings.users.delete');
+            Route::delete('/delete/{id}',               'SettingsController@usersDelete')->name('settings.users.delete');
+            Route::get('/download-file/{id}',           'SettingsController@usersDownloadFile')->name('settings.users.download-file');
+            Route::get('/change-password/{id}',         'SettingsController@usersChangePasswordDialog')->name('settings.users.change-password');
+            Route::patch('/change-password/{id}',        'SettingsController@usersChangePassword')->name('settings.users.change-password');
+            Route::get('/manage-bills/{id}',            'SettingsController@usersManageBillsDialog')->name('settings.users.manage-bills');
+        });
+        Route::prefix('bills')->namespace('Bills')->group(function () {
+            Route::get('/get-all/{user_id}',        'BillsController@getAll')->name('settings.bills.get-all');
+            Route::post('/store/{user_id}',         'BillsController@store')->name('settings.bills.store');
+            Route::delete('/delete/{id}',           'BillsController@delete');
+            Route::post('/attach-user',             'BillsController@attachUser')->name('settings.bills.attach-user');
         });
     });
 
-    Route::get('/give-money', function() {
+    Route::get('/add-money', function() {
         $bills = \App\Models\Bill::all();
         $bills->each(function($el) {
             $transaction = new \App\Models\Transaction();

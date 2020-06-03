@@ -1,4 +1,8 @@
-{!! Form::open(['route' => ['settings.users.change-password', $user->id], 'class' => 'modal-form']) !!}
+{!! Form::open([
+        'route' => ['settings.users.change-password', $user->id],
+        'method' => 'PATCH',
+        'class' => 'modal-form'
+]) !!}
     <div class="modal-header">
         <h5 class="modal-title">
             {{ __('Changing password') }}

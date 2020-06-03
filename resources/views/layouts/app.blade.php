@@ -27,6 +27,13 @@
     </div>
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
     <script src="https://kit.fontawesome.com/1565eb1309.js" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
     @yield('scripts')
 </body>
 </html>

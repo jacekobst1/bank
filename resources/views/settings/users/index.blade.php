@@ -57,43 +57,55 @@
                     <td>{{ $user->last_name }}</td>
                     <td>{{ $user->pesel }}</td>
                     <td style="min-width: 130px">
-                        <button
-                            type="button"
-                            class="btn btn-sm btn-primary modal-open-btn"
-                            data-toggle="modal"
-                            data-target="#modal"
-                            data-target-url="{{ route('settings.users.edit', $user->id) }}"
-                            title="{{ __('Edit') }}"
-                        >
-                            <i class="fa fa-pencil"></i>
-                        </button>
-                        <a
-                            href="{{ route('settings.users.download-file', $user->id) }}"
-                            class="btn btn-sm btn-warning modal-open-btn"
-                            title="{{ __('Download initial document') }}"
-                        >
-                            <i class="fa fa-download"></i>
-                        </a>
-                        <button
-                            type="button"
-                            class="btn btn-sm btn-secondary modal-open-btn"
-                            data-toggle="modal"
-                            data-target="#modal"
-                            data-target-url="{{ route('settings.users.change-password', $user->id) }}"
-                            title="{{ __('Change password') }}"
-                        >
-                            <i class="fa fa-key"></i>
-                        </button>
-                        <button
-                            type="button"
-                            class="btn btn-sm btn-danger modal-open-btn"
-                            data-toggle="modal"
-                            data-target="#modal"
-                            data-target-url="{{ route('settings.users.delete', $user->id) }}"
-                            title="{{ __('Delete') }}"
-                        >
-                            <i class="fa fa-trash"></i>
-                        </button>
+                        <div class="btn-group" role="group">
+                            <button
+                                    type="button"
+                                    class="btn btn-sm btn-primary modal-open-btn"
+                                    data-toggle="modal"
+                                    data-target="#modal"
+                                    data-target-url="{{ route('settings.users.edit', $user->id) }}"
+                                    title="{{ __('Edit') }}"
+                            >
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                            <button
+                                    type="button"
+                                    class="btn btn-sm btn-secondary modal-open-btn"
+                                    data-toggle="modal"
+                                    data-target="#modal"
+                                    data-target-url="{{ route('settings.users.change-password', $user->id) }}"
+                                    title="{{ __('Change password') }}"
+                            >
+                                <i class="fa fa-key"></i>
+                            </button>
+                            <a
+                                    href="{{ route('settings.users.download-file', $user->id) }}"
+                                    class="btn btn-sm btn-warning modal-open-btn"
+                                    title="{{ __('Download initial document') }}"
+                            >
+                                <i class="fa fa-download"></i>
+                            </a>
+                            <button
+                                    type="button"
+                                    class="btn btn-sm btn-secondary modal-open-btn"
+                                    data-toggle="modal"
+                                    data-target="#modal"
+                                    data-target-url="{{ route('settings.users.manage-bills', $user->id) }}"
+                                    title="{{ __('Manage bills') }}"
+                            >
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button
+                                    type="button"
+                                    class="btn btn-sm btn-danger modal-open-btn"
+                                    data-toggle="modal"
+                                    data-target="#modal"
+                                    data-target-url="{{ route('settings.users.delete', $user->id) }}"
+                                    title="{{ __('Delete') }}"
+                            >
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>
                     </td>
                 </tr>
             @endforeach
