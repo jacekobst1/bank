@@ -47,7 +47,7 @@ class BillsController extends Controller
         $user = User::findOrFail($user_id);
         while (true) {
             $bill_number = randomNumber(26);
-            if (!Bill::where('number', 'LIKe', $bill_number)->exists()) {
+            if (!Bill::where('number', 'LIKE', $bill_number)->exists()) {
                 break;
             }
         }
@@ -60,7 +60,7 @@ class BillsController extends Controller
 
     /**
      * Assign new user to an existing bill
-     * @param BillsAttachUserRequest $request
+     * @param CardsAttachUserRequest $request
      * @return JsonResponse
      */
     public function attachUser(BillsAttachUserRequest $request)
@@ -79,13 +79,14 @@ class BillsController extends Controller
      * @param BillsDetachUserRequest $request
      * @return JsonResponse
      */
-    public function delete(int $id, BillsDetachUserRequest $request)
+    public function detachUser(int $id, BillsDetachUserRequest $request)
     {
         $validated = $request->validated();
         $bill = Bill::findOrFail($id);
         // Detaching the user and if no users attached anymore - deleting the bill
         $bill->users()->detach($validated['user_id']);
         if ($bill->fresh()->users->count() === 0) {
+            $bill->cards()->delete();
             $bill->delete();
         }
         return response()->json(['status' => 200], 200);

@@ -16,6 +16,7 @@ class CreateBillsTable extends Migration
         Schema::create('bills', function (Blueprint $table) {
             $table->id();
             $table->char('number', 26);
+            $table->unsignedTinyInteger('type_id')->default(1);
             $table->unsignedTinyInteger('currency_type_id')->default(1);
             $table->timestamps();
             $table->softDeletes();

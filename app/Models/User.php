@@ -28,6 +28,7 @@ class User extends Authenticatable
     ];
 
     public function bills() { return $this->belongsToMany('App\Models\Bill', 'bill_user_pivot'); }
+    public function cards() { return $this->hasMany('App\Models\Card'); }
 
     public function getFullNameAttribute()
     {

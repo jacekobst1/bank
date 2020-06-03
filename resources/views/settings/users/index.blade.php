@@ -70,7 +70,7 @@
                             </button>
                             <button
                                     type="button"
-                                    class="btn btn-sm btn-secondary modal-open-btn"
+                                    class="btn btn-sm btn-dark modal-open-btn"
                                     data-toggle="modal"
                                     data-target="#modal"
                                     data-target-url="{{ route('settings.users.change-password', $user->id) }}"
@@ -87,10 +87,10 @@
                             </a>
                             <button
                                     type="button"
-                                    class="btn btn-sm btn-secondary modal-open-btn"
+                                    class="btn btn-sm btn-dark modal-open-btn"
                                     data-toggle="modal"
                                     data-target="#modal"
-                                    data-target-url="{{ route('settings.users.manage-bills', $user->id) }}"
+                                    data-target-url="{{ route('settings.users.manage-bills-and-cards', $user->id) }}"
                                     title="{{ __('Manage bills') }}"
                             >
                                 <i class="fa fa-bars"></i>

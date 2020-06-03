@@ -39,14 +39,20 @@ Route::middleware('auth')->group(function() {
             Route::delete('/delete/{id}',               'SettingsController@usersDelete')->name('settings.users.delete');
             Route::get('/download-file/{id}',           'SettingsController@usersDownloadFile')->name('settings.users.download-file');
             Route::get('/change-password/{id}',         'SettingsController@usersChangePasswordDialog')->name('settings.users.change-password');
-            Route::patch('/change-password/{id}',        'SettingsController@usersChangePassword')->name('settings.users.change-password');
-            Route::get('/manage-bills/{id}',            'SettingsController@usersManageBillsDialog')->name('settings.users.manage-bills');
+            Route::patch('/change-password/{id}',       'SettingsController@usersChangePassword')->name('settings.users.change-password');
+            Route::get('/manage-bills-and-cards/{id}',  'SettingsController@usersManageBillsAndCardsDialog')->name('settings.users.manage-bills-and-cards');
         });
         Route::prefix('bills')->namespace('Bills')->group(function () {
-            Route::get('/get-all/{user_id}',        'BillsController@getAll')->name('settings.bills.get-all');
-            Route::post('/store/{user_id}',         'BillsController@store')->name('settings.bills.store');
-            Route::delete('/delete/{id}',           'BillsController@delete');
-            Route::post('/attach-user',             'BillsController@attachUser')->name('settings.bills.attach-user');
+            Route::get('/get-all/{user_id}',            'BillsController@getAll')->name('settings.bills.get-all');
+            Route::post('/store/{user_id}',             'BillsController@store')->name('settings.bills.store');
+            Route::post('/detach-user/{id}',            'BillsController@detachUser');
+            Route::post('/attach-user',                 'BillsController@attachUser')->name('settings.bills.attach-user');
+        });
+        Route::prefix('cards')->namespace('Cards')->group(function () {
+            Route::get('/get-all/{user_id}',            'CardsController@getAll')->name('settings.cards.get-all');
+            Route::post('/store/{user_id}/{bill_id}',   'CardsController@store');
+            Route::delete('/delete/{id}',               'CardsController@delete');
+            Route::patch('/toggle-active/{id}',         'CardsController@toggleActive');
         });
     });
 

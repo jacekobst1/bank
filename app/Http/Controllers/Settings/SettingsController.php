@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Settings;
 
-use App\Card\Card;
+use App\Models\Card;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Settings\Requests\UsersChangePasswordRequest;
 use App\Http\Controllers\Settings\Requests\UsersStoreRequest;
@@ -227,9 +227,9 @@ class SettingsController extends Controller
      * @param int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function usersManageBillsDialog(int $id)
+    public function usersManageBillsAndCardsDialog(int $id)
     {
         $user = User::findOrFail($id);
-        return view('settings.users.modals.manage-bills', compact('user'));
+        return view('settings.users.modals.manage-bills-and-cards', compact('user'));
     }
 }
