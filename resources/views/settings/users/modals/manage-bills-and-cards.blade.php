@@ -13,7 +13,7 @@
         // Usunięcie rachunku
         $('body').on('click', '.delete-bill-btn', function() {
             $.ajax({
-                url: '/settings/bills/detach-user/' + $(this).attr('data-bill-id'),
+                url: '{{ env('APP_URL') }}/settings/bills/detach-user/' + $(this).attr('data-bill-id'),
                 type: 'POST',
                 data: {
                     user_id: "{{ $user->id }}"
@@ -43,7 +43,7 @@
         // Utworzenie nowej karty
         $('body').on('click', '.create-card-btn', function() {
             let bill_id = $(this).attr('data-bill-id');
-            $.post("/settings/cards/store/{{ $user->id }}/" + bill_id)
+            $.post("{{ env('APP_URL') }}/settings/cards/store/{{ $user->id }}/" + bill_id)
                 .then(response => {
                     loadData();
                 });
@@ -52,7 +52,7 @@
         // Usunięcie karty
         $('body').on('click', '.delete-card-btn', function() {
             $.ajax({
-                url: '/settings/cards/delete/' + $(this).attr('data-card-id'),
+                url: '{{ env('APP_URL') }}/settings/cards/delete/' + $(this).attr('data-card-id'),
                 type: 'DELETE',
                 success: response => {
                     loadData();
@@ -63,7 +63,7 @@
         // Blokoda/odblokowanie karty
         $('body').on('click', '.toggle-active-card-btn', function() {
             $.ajax({
-                url: '/settings/cards/toggle-active/' + $(this).attr('data-card-id'),
+                url: '{{ env('APP_URL') }}/settings/cards/toggle-active/' + $(this).attr('data-card-id'),
                 type: 'PATCH',
                 success: response => {
                     loadData();
