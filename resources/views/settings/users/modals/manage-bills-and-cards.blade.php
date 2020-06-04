@@ -106,7 +106,7 @@
                                     + "</button>";
                                 html += "<ul>";
                                 cards.forEach(card => {
-                                    if (card.bill_id === bill.id) {
+                                    if (parseInt(card.bill_id) === parseInt(bill.id)) {
                                         let clss = "class='payment-card'";
                                         if (!card.active) {
                                             clss = "class='payment-card payment-card-deactivated'";
