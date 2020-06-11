@@ -1,5 +1,15 @@
 @extends('layouts.app')
 
+@section('scripts')
+    <script>
+        $(function() {
+           $('[name=show_admins]').click(function() {
+               $(this.form).submit();
+           });
+        });
+    </script>
+@endsection
+
 @section('content')
     @include('settings.nav')
     {!! Form::open(['route' => 'settings.users', 'method' => 'get']) !!}
@@ -22,7 +32,7 @@
                             name="search"
                             type="text"
                             class="form-control"
-                            placeholder="{{ __('Search by name or PESEL') }}"
+                            placeholder="{{ __('Search by name, e-mail or PESEL') }}"
                             value="{{ $search }}"
                     >
                     <div class="input-group-append">
@@ -34,6 +44,10 @@
                         </button>
                     </div>
                 </div>
+                <label class="mt-2">
+                    {!! Form::checkbox('show_admins', true, $show_admins) !!}
+                    {{ __('Show admins') }}
+                </label>
             </div>
         </div>
     {!! Form::close() !!}
@@ -45,6 +59,7 @@
                 <td>{{ __('Type') }}</td>
                 <td>{{ __('First name') }}</td>
                 <td>{{ __('Second name') }}</td>
+                <td>{{ __('Email') }}</td>
                 <td>{{ __('PESEL') }}</td>
                 <td></td>
             </tr>
@@ -55,6 +70,7 @@
                     <td>{{ implode(', ', $user->getRoleNames()->toArray()) }}</td>
                     <td>{{ $user->first_name }}</td>
                     <td>{{ $user->last_name }}</td>
+                    <td>{{ $user->email }}</td>
                     <td>{{ $user->pesel }}</td>
                     <td style="min-width: 130px">
                         <div class="btn-group" role="group">
@@ -111,5 +127,5 @@
             @endforeach
         </tbody>
     </table>
-    {{ $users->links() }}
+    {{ $users->appends(request()->except('page'))->links() }}
 @endsection

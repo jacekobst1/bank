@@ -38,14 +38,27 @@ class SettingsController extends Controller
     public function users(Request $request)
     {
         $search = $request->get('search') ?? null;
-        $users = User::with('roles');
+        $show_admins = $request->get('show_admins');
+        $role = $show_admins ? 'admin' : 'user';
+        $users = User::with('roles')->whereHas('roles', function($r) use($role) {
+                $r->whereName($role);
+            });
+
         if ($search) {
-            $users->where('first_name', 'LIKE', '%' . $search . '%')
-                ->orWhere('last_name', 'LIKE', '%' . $search . '%')
-                ->orWhere('pesel', 'LIKE', '%' . $search . '%');
+            $users->where(function($q) use($search) {
+                $q->where('first_name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('last_name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('pesel', 'LIKE', '%' . $search . '%')
+                    ->orWhere('email', 'LIKE', '%' . $search . '%');
+            });
         }
+
         $users = $users->paginate(15);
-        return view('settings.users.index', compact('users', 'search'));
+        return view('settings.users.index', compact(
+            'users',
+            'search',
+            'show_admins'
+        ));
     }
 
     /**
