@@ -16,7 +16,10 @@
             <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-start">
                 <label>
                     {{ __('Password') }}
-                    {!! Form::password('password', ['class' => 'form-control']) !!}
+                    {!! Form::password('password', [
+                            'class' => 'form-control',
+                            'autocomplete' => 'new-password'
+                    ]) !!}
                 </label>
             </div>
             <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-start">
