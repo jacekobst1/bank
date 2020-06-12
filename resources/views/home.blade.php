@@ -72,8 +72,6 @@
 
                 <div id="curve_chart" style="width: 700px; height: 400px"></div>
 
-                {{ dd($transactions[$transactions->keys()->last()]) }}
-
                 {{-- {{ dd($transactions[$transactions->keys()->last()]->updated_at->format('d-m-Y')) }} --}}
                 {{-- {{ dd($transactions[$transactions->keys()->last()-2])}} --}}
 
