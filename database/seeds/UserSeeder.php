@@ -81,6 +81,32 @@ class UserSeeder extends Seeder
         );
         $this->insert(
             [
+                'first_name' => 'Jerzy',
+                'last_name' => 'Wiśniewski',
+                'pesel' => '80010198765',
+                'address' => 'ul. Powstańców Wielkopolskich 1',
+                'zip_code' => '61-895',
+                'city' => 'Poznań',
+                'email' => 'jerzy.wisniewski@wsb.poznan.pl',
+                'password' => 'zaq1@WSX'
+            ],
+            ['admin']
+        );
+        $this->insert(
+            [
+                'first_name' => 'Mirosław',
+                'last_name' => 'Szyper',
+                'pesel' => '80010198765',
+                'address' => 'ul. Powstańców Wielkopolskich 1',
+                'zip_code' => '61-895',
+                'city' => 'Poznań',
+                'email' => 'miroslaw.szyper@wsb.poznan.pl',
+                'password' => 'zaq1@WSX'
+            ],
+            ['admin']
+        );
+        $this->insert(
+            [
                 'first_name' => 'user',
                 'last_name' => 'user',
                 'pesel' => '97010198765',
