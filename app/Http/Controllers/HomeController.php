@@ -13,7 +13,12 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('permission:manage-bills');
+        $this->middleware(function ($request, $next) {
+            if (!auth()->user()->can('manage-bills') ) {
+                return redirect()->route('settings.users');
+            }
+            return $next($request);
+        });
     }
 
     /**
