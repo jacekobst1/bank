@@ -37476,8 +37476,13 @@ $('#modal').on('hide.bs.modal', function (event) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var url = window.location.pathname.split('/')[1];
-$('[data-url=' + url + ']').addClass('active');
+var url = window.location.pathname.split('/');
+var parts = url.filter(function (part) {
+  return part !== '';
+});
+parts.forEach(function (part) {
+  $('[data-url=' + part + ']').addClass('active');
+});
 
 /***/ }),
 
