@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('scripts')
+    @parent
     <script>
         $(function() {
            $('[name=show_admins]').click(function() {

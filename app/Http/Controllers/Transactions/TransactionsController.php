@@ -31,7 +31,7 @@ class TransactionsController extends Controller
     {
         $bills = array_map(function($el) {
             return "$el[formatted_number] ($el[balance] $el[currency])";
-        }, auth()->user()->bills()->get()->keyBy('id')->toArray());
+        }, auth()->user()->bills->keyBy('id')->toArray());
 
         $bill_id = $request->bill_id ?? array_keys($bills)[0];
         $transactions = Transaction::where(function ($q) use ($bill_id) {

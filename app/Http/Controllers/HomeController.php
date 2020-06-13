@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('permission:manage-bills');
     }
 
     /**
@@ -23,6 +23,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $bills = array_map(function($el) {
+            return "$el[formatted_number] ($el[balance] $el[currency])";
+        }, auth()->user()->bills->keyBy('id')->toArray());
+        $cards = auth()->user()->cards;
+        return view('home', compact(
+            'bills',
+            'cards'
+        ));
     }
 }

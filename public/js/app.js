@@ -37330,6 +37330,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! ./modal */ "./resources/js/modal.js");
 
+__webpack_require__(/*! ./nav */ "./resources/js/nav.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -37464,6 +37466,18 @@ $('body').on('click', '.modal-submit-btn', function () {
 $('#modal').on('hide.bs.modal', function (event) {
   $('.alert').hide();
 });
+
+/***/ }),
+
+/***/ "./resources/js/nav.js":
+/*!*****************************!*\
+  !*** ./resources/js/nav.js ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var url = window.location.pathname.split('/')[1];
+$('[data-url=' + url + ']').addClass('active');
 
 /***/ }),
 

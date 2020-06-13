@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Cards;
 use App\Models\Card;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class CardsController extends Controller
 {
@@ -14,7 +15,9 @@ class CardsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('permission:manage-settings');
+        $this->middleware('permission:manage-settings')->except([
+            'toggleActive'
+        ]);
     }
 
     /**
@@ -68,10 +71,13 @@ class CardsController extends Controller
      * @param int $id
      * @return JsonResponse
      */
-    public function toggleActive(int $id)
+    public function toggleActive(Request $request, int $id)
     {
         $card = Card::findOrFail($id);
         $card->update(['active' => !$card->active]);
-        return response()->json(['status' => 200], 200);
+        if ($request->ajax()) {
+            return response()->json(['status' => 200], 200);
+        }
+        return redirect()->back();
     }
 }

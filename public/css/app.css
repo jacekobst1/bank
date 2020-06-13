@@ -10889,3 +10889,9 @@ a.text-dark:focus {
   display: none;
 }
 
+.payment-card-deactivated {
+  color: silver;
+  -webkit-text-decoration-line: line-through;
+          text-decoration-line: line-through;
+}
+

@@ -212,8 +212,4 @@
     .payment-card button {
         font-size: 0.35rem !important;
     }
-    .payment-card-deactivated {
-        color: silver;
-        text-decoration-line: line-through;
-    }
 </style>
