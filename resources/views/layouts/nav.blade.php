@@ -8,7 +8,7 @@
                     href="{{ route('settings.users') }}"
                 @endcan
         >
-            {{ config('app.name', 'Laravel') }}
+            {{ __('Home') }}
         </a>
         <button
                 class="navbar-toggler"

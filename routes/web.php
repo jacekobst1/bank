@@ -26,6 +26,8 @@ Route::middleware('auth')->group(function() {
         Route::get('/',                         'TransactionsController@index')->name('transactions');
         Route::get('/create',                   'TransactionsController@create')->name('transactions.create');
         Route::post('/store',                   'TransactionsController@store')->name('transactions.store');
+        Route::get('/prepare-report',           'TransactionsController@prepareReport')->name('transactions.prepare-report');
+        Route::get('/generate-report',          'TransactionsController@generateReport')->name('transactions.generate-report');
     });
 
     Route::prefix('settings')->group(function() {

@@ -71,7 +71,7 @@
             });
         });
 
-        // Pobranie wszystkich rachunków i kard dla danego usera
+        // Pobranie wszystkich rachunków i kart dla danego usera
         function loadData() {
             $.get('{{ route('settings.bills.get-all', $user->id) }}')
                 .then(response => {

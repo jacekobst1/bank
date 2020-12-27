@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Transactions\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TransactionsCreateRequest extends FormRequest
+class TransactionsBillIdRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

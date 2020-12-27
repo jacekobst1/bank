@@ -12,19 +12,33 @@
 @section('content')
     {!! Form::open(['route' => 'transactions', 'method' => 'get']) !!}
         <div class="row">
-            <div class="col-md-4">
-                <button
+            <div class="row col-lg-7 mx-0">
+                <div class="col-lg-6 px-0">
+                    <button
                         type="button"
-                        class="btn btn-success modal-open-btn"
+                        class="btn btn-success modal-open-btn w-100"
                         data-toggle="modal"
                         data-target="#modal"
                         data-target-url="{{ route('transactions.create', ['bill_id' => $bill_id]) }}"
-                >
-                    <i class="fas fa-money-bill-alt"></i>
-                    {{ __('Make new transaction') }}
-                </button>
+                    >
+                        <i class="fas fa-money-bill-alt"></i>
+                        {{ __('Make new transaction') }}
+                    </button>
+                </div>
+                <div class="col-lg-6 px-0 pl-lg-3 mt-2 mt-lg-0">
+                    <button
+                            type="button"
+                            class="btn btn-secondary modal-open-btn w-100"
+                            data-toggle="modal"
+                            data-target="#modal"
+                            data-target-url="{{ route('transactions.prepare-report', ['bill_id' => $bill_id]) }}"
+                    >
+                        <i class="fas fa-file-alt"></i>
+                        {{ __('Generate transactions report') }}
+                    </button>
+                </div>
             </div>
-            <div class="col-md-6 offset-md-2 mt-2 mt-md-0">
+            <div class="col-lg-4 mt-4 mt-lg-0 ml-lg-auto">
                 {!! Form::select('bill_id', $bills , $bill_id , ['class' => 'form-control']) !!}
             </div>
         </div>

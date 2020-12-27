@@ -97,7 +97,7 @@
                             </button>
                             <a
                                     href="{{ route('settings.users.download-file', $user->id) }}"
-                                    class="btn btn-sm btn-warning modal-open-btn"
+                                    class="btn btn-sm btn-warning"
                                     title="{{ __('Download initial document') }}"
                             >
                                 <i class="fa fa-download"></i>

@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Transactions;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Transactions\Requests\TransactionsCreateRequest;
+use App\Http\Controllers\Transactions\Requests\TransactionsBillIdRequest;
+use App\Http\Controllers\Transactions\Requests\TransactionsGenerateReport;
 use App\Http\Controllers\Transactions\Requests\TransactionsStoreRequest;
 use App\Models\Bill;
 use App\Models\Transaction;
-use App\Models\User;
+use PDF;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
 
 class TransactionsController extends Controller
 {
@@ -51,7 +51,7 @@ class TransactionsController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create(TransactionsCreateRequest $request)
+    public function create(TransactionsBillIdRequest $request)
     {
         $bill_id = $request->validated()['bill_id'];
         return view('transactions.modals.create', compact('bill_id'));
@@ -83,5 +83,52 @@ class TransactionsController extends Controller
         $transaction->amount = $validated['amount'];
         $transaction->save();
         return response()->json(['status' => 200], 200);
+    }
+
+    public function prepareReport(TransactionsBillIdRequest $request)
+    {
+        $validated = $request->validated();
+
+        $bill = Bill::findOrFail($validated['bill_id']);
+        $transactions = Transaction::where(function($q) use($validated) {
+                $q->whereSourceBillId($validated['bill_id'])
+                    ->orWhere('target_bill_id', $validated['bill_id']);
+            });
+
+        $min_date = Date('Y-m-d', strtotime(
+            (clone $transactions)->min('created_at'))
+        );
+        $max_date = Date('Y-m-d', strtotime(
+            (clone $transactions)->max('created_at'))
+        );
+
+        return view('transactions.modals.prepare-report', compact(
+            'bill',
+            'min_date',
+            'max_date'
+        ));
+    }
+
+    public function generateReport(TransactionsGenerateReport $request)
+    {
+        $validated = $request->validated();
+
+        $bill = Bill::findOrFail($validated['bill_id']);
+        $transactions = Transaction::with('sourceBill.users', 'targetBill.users')
+            ->where(function($q) use($validated) {
+                $q->whereSourceBillId($validated['bill_id'])
+                    ->orWhere('target_bill_id', $validated['bill_id']);
+            })
+            ->whereDate('created_at', '>=', $validated['start_date'])
+            ->whereDate('created_at', '<=', $validated['end_date'])
+            ->get();
+
+        $data = $validated;
+        $pdf = PDF::loadView('pdf.transactions-report', compact(
+            'data',
+            'bill',
+            'transactions'
+        ));
+        return $pdf->download("transactions_from_{$validated['start_date']}_to_{$validated['end_date']}.pdf");
     }
 }
